@@ -1276,7 +1276,6 @@ function App() {
 
   return (
     <>
-      <style>{CSS}</style>
       {vue === "accueil"      && <PageAccueil onStart={() => { log("diagnostic_started"); setVue("questions"); }} />}
       {vue === "questions"    && <PageQuestion question={QUESTIONS[qIndex]} qIndex={qIndex} total={QUESTIONS.length} onAnswer={answer} />}
       {vue === "analyse"      && <PageAnalyse />}
