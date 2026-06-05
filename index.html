@@ -478,10 +478,23 @@
 </head>
 <body>
 <div id="root"></div>
+
+<script>
+window.onerror = function(msg, src, line, col, err) {
+  document.getElementById('root').innerHTML = 
+    '<div style="color:white;padding:20px;font-family:monospace">' +
+    '<h2>Erreur JavaScript</h2>' +
+    '<p>' + msg + '</p>' +
+    '<p>Ligne: ' + line + '</p>' +
+    '</div>';
+  return false;
+};
+</script>
+
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel" data-presets="react,env">
+<script type="text/babel">
 const { useState, useEffect, useRef } = React;
 
 
