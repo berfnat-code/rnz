@@ -481,10 +481,9 @@
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel">
+<script type="text/babel" data-presets="react,env">
 const { useState, useEffect, useRef } = React;
 
-import { useState, useEffect, useRef } from "react";
 
 // ─── QUESTIONS ───────────────────────────────────────────────────────────────
 
@@ -596,7 +595,7 @@ const QUESTIONS = [
 const PROFILS = {
   blessure: {
     nom: "Mon kèr lé lour",
-    texte: `Depi in moman ou kontini avansé.\nOu kontini fé sek ou dou fèr.\n\nMé o fon, néna ankor bann zafèr an ou ke ou port ankor.\n\nBann déseptsion, bann blésir, bann parol ke la rèst dan out kèr.\nDéfoi, nou pans ke nout problèm sé in mank de motivasion.\n\nAlor ke an réalité, nou lé zist fatigué port tro de poi an nou.\nAvan rod avans vit, riskap le plus inportan sé de lès repoz in pé nout kèr.`,
+    texte: "Depi in moman ou kontini avansé.\nOu kontini fé sek ou dou fèr.\n\nMé o fon, néna ankor bann zafèr an ou ke ou port ankor.\n\nBann déseptsion, bann blésir, bann parol ke la rèst dan out kèr.\nDéfoi, nou pans ke nout problèm sé in mank de motivasion.\n\nAlor ke an réalité, nou lé zist fatigué port tro de poi an nou.\nAvan rod avans vit, riskap le plus inportan sé de lès repoz in pé nout kèr.",
     pdfDesc: "PDF-la la été kréé pou èd aou konprann dé troi zafèr ke ou port ankor zordi, é arkomans dousman trouv out paix.",
     pdf: "La Solitud",
     bonus: "10 fason pansé à adopté",
@@ -607,7 +606,7 @@ const PROFILS = {
   },
   stagnation: {
     nom: "Mi stagn",
-    texte: `Riskap ou la fini lir, déza apri ou mèm déza réfléchir.\nOu la fini di aou : « Demin mi komans », « Astèr sé la bone », « Astèr mi pas a l'aksion. »\n\nMé malgré tou, néna ankor in zafèr i blok.\nPa paské ou lé pa kapab. Pa paské ou lé an mank d'intéligans.\nMé paské défoi, nou rest tro lontan dan la préparasion.\n\nLe sanzman i ariv rarman kan nou lé pré.\nLi ariv kan nou désid avansé malgré lé dout.\nMèm ek la pèr, mèm ek lézitasion é mèm inparfètman.`,
+    texte: "Riskap ou la fini lir, déza apri ou mèm déza réfléchir.\nOu la fini di aou : Demin mi komans, Astèr sé la bone, Astèr mi pas a l'aksion.\n\nMé malgré tou, néna ankor in zafèr i blok.\nPa paské ou lé pa kapab. Pa paské ou lé an mank d'intéligans.\nMé paské défoi, nou rest tro lontan dan la préparasion.\n\nLe sanzman i ariv rarman kan nou lé pré.\nLi ariv kan nou désid avansé malgré lé dout.\nMèm ek la pèr, mèm ek lézitasion é mèm inparfètman.",
     pdfDesc: "PDF-la la été pansé pou èd aou arèt atann le bon moman, é komans konstruir le mouvman.",
     pdf: "7 révélasion",
     bonus: "30 fraz pou rést débout",
@@ -618,7 +617,7 @@ const PROFILS = {
   },
   discipline: {
     nom: "Mi komans, mé mi tien pa",
-    texte: `Riskap ou mank pa du tout de motivasion.\nPaské la motivasion, ou la fini gayn ali.\nOu la déza komansé, ou la déza éséyé, ou la déza promi aou ke astèr sera diféran.\n\nMé bien souvan, o bou d'in moman, nou largue.\nÉ sak foi ke nou abandone in promès anvèr nou mèm, sé nout konfians an nou ki bès.\n\nLe problèm lé pa forséman sek ou komans.\nLe problèm sé ke ou ariv pa ankor ténir.\n\nLa vré transformasion i ariv kan nou aprann a kontinié mèm kan l'anvi lé pi la.`,
+    texte: "Riskap ou mank pa du tout de motivasion.\nPaské la motivasion, ou la fini gayn ali.\nOu la déza komansé, ou la déza éséyé, ou la déza promi aou ke astèr sera diféran.\n\nMé bien souvan, o bou d'in moman, nou largue.\nÉ sak foi ke nou abandone in promès anvèr nou mèm, sé nout konfians an nou ki bès.\n\nLe problèm lé pa forséman sek ou komans.\nLe problèm sé ke ou ariv pa ankor ténir.\n\nLa vré transformasion i ariv kan nou aprann a kontinié mèm kan l'anvi lé pi la.",
     pdfDesc: "PDF-la la été kréé pou èd aou konstrui bann l'abitud solid, é arkomans a fèr aou konfians.",
     pdf: "La Disipline",
     bonus: "10 fason pansé à adopté",
@@ -1094,13 +1093,12 @@ function PageEmail({ profil, onSubmit }) {
 
   useEffect(() => log("page_email"), []);
 
-  async function submit() {
+  function submit() {
     if (!prenom.trim())                               { setErr("Rant out prénom."); return; }
     if (!email.includes("@") || !email.includes(".")) { setErr("Rant in email valid."); return; }
     setErr(""); setBusy(true);
     log("email_submit", { profil });
-    await onSubmit({ prenom: prenom.trim(), email: email.trim() });
-    setBusy(false);
+    onSubmit({ prenom: prenom.trim(), email: email.trim() });
   }
 
   return (
@@ -1156,7 +1154,7 @@ function PageEmail({ profil, onSubmit }) {
         </p>
         <button className="btn-main" onClick={submit} disabled={busy}>
           {busy
-            ? "⏳ Envoi en cours…"
+            ? "Envoi en cours..."
             : <><span>RESEVOIR MON PDF</span><span className="btn-arrow">→</span></>}
         </button>
         <p className="form-social">Déza plis de 200 persone la fé ce diagnostik.</p>
@@ -1206,7 +1204,7 @@ function PageConfirmation({ onRefaire, onAccueil }) {
 
 // ─── APP ─────────────────────────────────────────────────────────────────────
 
-export default function App() {
+function App() {
   const [vue, setVue]         = useState("accueil");
   const [qIndex, setQIndex]   = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -1226,36 +1224,33 @@ export default function App() {
     }
   }
 
-  async function submitEmail({ prenom: p, email }) {
+  function submitEmail({ prenom: p, email }) {
     setPrenom(p);
     const pd = PROFILS[profil];
 
-    // ⚠️ window.open BEFORE any await — Safari iOS blocks async popups
-    window.open(`/pdfs/${pd.pdfFile}`, "_blank");
+    // ⚠️ window.open BEFORE fetch — Safari iOS blocks async popups
+    window.open("/pdfs/" + pd.pdfFile, "_blank");
 
     // Send to MailerLite via Netlify function
-    try {
-      const res = await fetch("/.netlify/functions/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prenom: p,
-          email,
-          profil: pd.groupe,
-          pdfFile: pd.pdfFile,
-          date: new Date().toISOString(),
-        }),
-      });
-
+    fetch("/.netlify/functions/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        prenom: p,
+        email: email,
+        profil: pd.groupe,
+        pdfFile: pd.pdfFile,
+        date: new Date().toISOString(),
+      }),
+    })
+    .then(function(res) {
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        console.error("[RNZ] Subscribe error:", res.status, err);
-        // Don't block user — PDF already opened, show confirmation anyway
+        console.error("[RNZ] Subscribe error:", res.status);
       }
-    } catch (e) {
+    })
+    .catch(function(e) {
       console.error("[RNZ] Network error:", e);
-      // Same — don't block user
-    }
+    });
 
     setVue("confirmation");
   }
