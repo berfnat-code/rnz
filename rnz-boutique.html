@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="cr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RNZ — Boutique</title>
+  <meta name="description" content="Zoutis pou avans dann la vi — an kréol rényoné. PDFs, citations, fraz pou grandi chak jou." />
+  <meta property="og:title" content="Boutique RNZ — Rouv Nout Zyé" />
+  <meta property="og:description" content="Zoutis pou avans dann la vi — an kréol rényoné. PDFs, citations, fraz pou grandi chak jou." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#181410" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23181410'/><text y='72' x='50' text-anchor='middle' font-size='62' font-family='serif' fill='%23BF9B4E'>R</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #181410;
+      --bg-card:  #1F1A13;
+      --bg-hover: #252018;
+      --or:       #BF9B4E;
+      --or-hi:    #D4AF6A;
+      --or-dim:   rgba(191,155,78,0.18);
+      --or-line:  rgba(191,155,78,0.22);
+      --or-glow:  rgba(191,155,78,0.06);
+      --text:     #EDE4D0;
+      --text-2:   #8C7D62;
+      --text-3:   #4A3F2E;
+      --divide:   rgba(191,155,78,0.14);
+      --green:    #4CAF50;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.7; -webkit-font-smoothing: antialiased; min-height: 100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(24,20,16,0.94); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--divide);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.25rem;
+      font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+    }
+    .logo span { color: var(--or); }
+    .back {
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-2); text-decoration: none; transition: color 0.2s;
+    }
+    .back:hover { color: var(--or); }
+
+    /* ══════════════════════════════
+       1. HERO — Accroche émotionnelle
+    ══════════════════════════════ */
+    .hero {
+      text-align: center; padding: 8rem 2rem 0;
+    }
+    .hero-mark {
+      display: inline-flex; align-items: center; gap: 0.9rem;
+      font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 2.5rem;
+    }
+    .hero-mark::before, .hero-mark::after {
+      content: ''; display: block; width: 28px; height: 1px;
+      background: var(--or); opacity: 0.5;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 300; line-height: 1.12;
+      color: var(--text); margin-bottom: 1.5rem; letter-spacing: -0.01em;
+    }
+    .hero h1 .word {
+      display: inline-block; opacity: 0; transform: translateY(12px);
+      animation: wordIn 0.5s ease forwards;
+    }
+    @keyframes wordIn { to { opacity: 1; transform: translateY(0); } }
+    .hero h1 em { font-style: italic; font-weight: 300; color: var(--or-hi); }
+    .hero-sub {
+      font-size: 0.82rem; letter-spacing: 0.12em; color: var(--text-2);
+      font-weight: 300; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    /* Un seul avis vedette sous le titre — preuve immédiate */
+    .hero-avis {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: var(--bg-card); border: 1px solid var(--divide);
+      padding: 0.65rem 1.25rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero-avis-stars { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--or); }
+    .hero-avis-texte {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 0.9rem; color: var(--text-2);
+    }
+    .hero-avis-auteur {
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); white-space: nowrap;
+    }
+    .hero-cta {
+      display: inline-block; font-size: 0.68rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--or); text-decoration: none;
+      border: 1px solid var(--or-line); padding: 0.8rem 2rem; border-radius: 1px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero-cta:hover { background: var(--or-dim); color: var(--or-hi); }
+
+    /* ══════════════════════════════
+       2. STATS — Crédibilité (une seule fois)
+    ══════════════════════════════ */
+    .stats-bande {
+      border-top: 1px solid var(--divide); border-bottom: 1px solid var(--divide);
+      display: flex; align-items: stretch; background: var(--bg-card);
+      margin-top: 5rem;
+    }
+    .stat-item {
+      flex: 1; text-align: center; padding: 2.25rem 1rem;
+      border-right: 1px solid var(--divide);
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
+      font-weight: 300; color: var(--or-hi); line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-2); font-weight: 300;
+    }
+
+    /* ══════════════════════════════
+       3. CITATION — Envie / goût
+    ══════════════════════════════ */
+    .citation-section {
+      max-width: 680px; margin: 0 auto; padding: 5rem 2rem 4rem; text-align: center;
+    }
+    .citation-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 2rem; display: block;
+    }
+    .citation-texte {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-style: italic; font-weight: 300; color: var(--text);
+      line-height: 1.45; margin-bottom: 1.5rem;
+    }
+    .citation-texte::before { content: '\201C'; color: var(--or); }
+    .citation-texte::after  { content: '\201D'; color: var(--or); }
+    .citation-source {
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3);
+    }
+
+    /* ══════════════════════════════
+       4. TABS + PRODUITS — Action
+    ══════════════════════════════ */
+    .tabs-row {
+      display: flex; justify-content: center;
+      padding: 0 2rem 5rem; border-top: 1px solid var(--divide);
+    }
+    .tabs { display: flex; align-items: center; position: relative; }
+    .tabs::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px; background: var(--divide);
+    }
+    .tab-btn {
+      padding: 0.9rem 2.2rem; font-size: 0.68rem; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-2);
+      background: transparent; border: none; cursor: pointer;
+      position: relative; transition: color 0.25s; white-space: nowrap;
+    }
+    .tab-btn::after {
+      content: ''; position: absolute; bottom: 0; left: 50%; right: 50%;
+      height: 1px; background: var(--or); transition: left 0.3s, right 0.3s;
+    }
+    .tab-btn.active { color: var(--text); }
+    .tab-btn.active::after { left: 0; right: 0; }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeUp 0.35s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section        { max-width: 1100px; margin: 0 auto; padding: 0 3rem 8rem; }
+    .section-narrow { max-width: 740px;  margin: 0 auto; padding: 0 2rem 8rem; }
+
+    /* Promesse au-dessus des cartes */
+    .produits-promesse {
+      text-align: center; margin-bottom: 3rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-style: italic; font-weight: 300;
+      color: var(--text-2); letter-spacing: 0.02em;
+    }
+
+    /* Grille produits */
+    .produits-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--divide);
+      border: 1px solid var(--divide); border-radius: 2px;
+      overflow: hidden; margin-bottom: 5rem;
+    }
+    .carte {
+      background: var(--bg-card); padding: 2.5rem 2rem;
+      display: flex; flex-direction: column; transition: background 0.25s;
+    }
+    .carte:hover { background: var(--bg-hover); }
+    .carte-badge {
+      display: inline-block; font-size: 0.58rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--bg); background: var(--or);
+      padding: 0.18rem 0.55rem; border-radius: 2px;
+      margin-bottom: 0.6rem; align-self: flex-start;
+    }
+    .carte-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 0.75rem;
+      font-weight: 300; letter-spacing: 0.2em; color: var(--or);
+      opacity: 0.6; margin-bottom: 1.5rem;
+    }
+    .carte h2 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+      font-weight: 400; line-height: 1.25; color: var(--text); margin-bottom: 1rem;
+    }
+    .carte-desc {
+      font-size: 0.8rem; color: var(--text-2); font-weight: 300;
+      flex: 1; margin-bottom: 2.5rem; line-height: 1.8;
+    }
+    .carte-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.5rem; border-top: 1px solid var(--divide);
+    }
+    .prix-carte {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+      font-weight: 400; color: var(--text); line-height: 1;
+    }
+    .prix-carte sup {
+      font-size: 0.75rem; font-weight: 300; color: var(--text-2);
+      vertical-align: super; font-family: 'Inter', sans-serif;
+    }
+    .btn-ghost {
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--or); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: gap 0.2s; background: none; border: none; cursor: pointer; padding: 0;
+    }
+    .btn-ghost:hover { gap: 0.8rem; }
+    .btn-ghost::after { content: '→'; }
+
+    /* Pak Konplé */
+    .pak {
+      border: 1px solid var(--or-line); border-radius: 2px;
+      background: var(--bg-card); padding: 4rem 3.5rem;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: start; position: relative; overflow: hidden;
+    }
+    .pak::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--or), transparent); opacity: 0.6;
+    }
+    .pak::after {
+      content: ''; position: absolute; bottom: -80px; right: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(191,155,78,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pak-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 1.5rem; display: block;
+    }
+    .pak h2 {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;
+      font-weight: 300; line-height: 1.15; color: var(--text); margin-bottom: 1rem;
+    }
+    .pak h2 em { font-style: italic; color: var(--or-hi); }
+    .pak-desc {
+      font-size: 0.8rem; color: var(--text-2); font-weight: 300;
+      margin-bottom: 2rem; line-height: 1.8; max-width: 420px;
+    }
+    .pak-liste {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 0.6rem; margin-bottom: 2.5rem;
+    }
+    .pak-liste li {
+      font-size: 0.78rem; color: var(--text-2);
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .pak-liste li::before {
+      content: ''; display: inline-block; width: 4px; height: 4px;
+      border-radius: 50%; background: var(--or); opacity: 0.7; flex-shrink: 0;
+    }
+    .pak-avis {
+      border-top: 1px solid var(--divide); padding-top: 1.75rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .pak-avis-texte {
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+      font-style: italic; color: var(--text-2); line-height: 1.6;
+    }
+    .pak-avis-auteur {
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3);
+    }
+    .pak-avis-stars { font-size: 0.6rem; letter-spacing: 0.18em; color: var(--or); }
+    .pak-right {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 1.5rem; flex-shrink: 0; padding-top: 0.5rem;
+    }
+    .pak-prix { text-align: right; }
+    .pak-prix-ancien {
+      font-size: 0.8rem; color: var(--text-3); text-decoration: line-through;
+      letter-spacing: 0.06em; display: block; margin-bottom: 0.2rem;
+    }
+    .pak-prix-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 3rem;
+      font-weight: 300; color: var(--or-hi); line-height: 1; display: block;
+    }
+    .pak-prix-label {
+      font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--text-2); display: block; margin-top: 0.4rem;
+    }
+    .pak-economie {
+      font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green); background: rgba(76,175,80,0.1);
+      border: 1px solid rgba(76,175,80,0.2);
+      padding: 0.2rem 0.6rem; border-radius: 2px; display: inline-block; margin-top: 0.5rem;
+    }
+    .btn-stripe {
+      display: block; padding: 1.1rem 2.4rem; background: var(--or); color: var(--bg);
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; border-radius: 1px; transition: background 0.2s; text-align: center;
+    }
+    .btn-stripe:hover { background: var(--or-hi); }
+    .pak-securite {
+      font-size: 0.62rem; color: var(--text-3); letter-spacing: 0.08em;
+      text-align: center; line-height: 1.6;
+    }
+    .pak-securite span { display: block; color: var(--text-2); margin-top: 0.2rem; }
+
+    /* Communauté */
+    .comm-list {
+      display: flex; flex-direction: column; gap: 1px;
+      background: var(--divide); border: 1px solid var(--divide);
+      border-radius: 2px; overflow: hidden;
+    }
+    .comm-item {
+      background: var(--bg-card); padding: 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; transition: background 0.22s;
+    }
+    .comm-item:hover { background: var(--bg-hover); }
+    .comm-kicker {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 0.6rem; display: block;
+    }
+    .comm-item h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+      font-weight: 400; color: var(--text); margin-bottom: 0.5rem;
+    }
+    .comm-item p {
+      font-size: 0.78rem; color: var(--text-2); font-weight: 300;
+      max-width: 440px; line-height: 1.75;
+    }
+    .btn-tg {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      padding: 0.75rem 1.5rem; background: #0088cc; color: #fff;
+      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; border-radius: 1px;
+      flex-shrink: 0; transition: opacity 0.2s;
+    }
+    .btn-tg:hover { opacity: 0.82; }
+    .btn-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--or); text-decoration: none; flex-shrink: 0; transition: gap 0.2s;
+    }
+    .btn-link:hover { gap: 0.8rem; }
+    .btn-link::after { content: '→'; }
+
+    /* Avis */
+    .avis-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--divide);
+      border: 1px solid var(--divide); border-radius: 2px;
+      overflow: hidden; margin-bottom: 4rem;
+    }
+    .avis-card {
+      background: var(--bg-card); padding: 2.5rem 2rem;
+      display: flex; flex-direction: column; gap: 1.25rem; transition: background 0.22s;
+    }
+    .avis-card:hover { background: var(--bg-hover); }
+    .avis-stars { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--or); }
+    .avis-texte {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+      font-style: italic; font-weight: 300; color: var(--text);
+      line-height: 1.6; flex: 1;
+    }
+    .avis-auteur {
+      font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-2); padding-top: 1rem; border-top: 1px solid var(--divide);
+    }
+    .avis-empty {
+      background: transparent; border: 1px dashed var(--divide);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* apropos et faq sont gérés inline dans l'onglet boutique */
+    .apropos-card {
+      background: var(--bg-card); border: 1px solid var(--divide);
+      border-radius: 2px; padding: 3rem 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .apropos-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--or), transparent); opacity: 0.4;
+    }
+    .apropos-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 1.5rem; display: block;
+    }
+    .apropos-card h2 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+      font-weight: 300; line-height: 1.2; color: var(--text); margin-bottom: 1.5rem;
+    }
+    .apropos-card h2 em { font-style: italic; color: var(--or-hi); }
+    .apropos-card p {
+      font-size: 0.85rem; color: var(--text-2); font-weight: 300;
+      line-height: 1.9; margin-bottom: 1rem;
+    }
+    .apropos-card p:last-child { margin-bottom: 0; }
+    .faq-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 2rem; display: block; text-align: center;
+    }
+    .faq-list {
+      display: flex; flex-direction: column; gap: 1px;
+      background: var(--divide); border: 1px solid var(--divide);
+      border-radius: 2px; overflow: hidden;
+    }
+    .faq-item { background: var(--bg-card); overflow: hidden; }
+    .faq-question {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem;
+      padding: 1.4rem 1.75rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 400; color: var(--text);
+      background: none; border: none; cursor: pointer; text-align: left;
+      transition: background 0.2s;
+    }
+    .faq-question:hover { background: var(--bg-hover); }
+    .faq-icon {
+      font-size: 1rem; color: var(--or); flex-shrink: 0;
+      transition: transform 0.25s; font-style: normal;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-reponse {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s;
+      padding: 0 1.75rem;
+    }
+    .faq-item.open .faq-reponse { max-height: 300px; padding: 0 1.75rem 1.4rem; }
+    .faq-reponse p {
+      font-size: 0.82rem; color: var(--text-2); font-weight: 300;
+      line-height: 1.85; border-top: 1px solid var(--divide); padding-top: 1.1rem;
+    }
+
+    /* ── URGENCE ── */
+    .annonce-barre {
+      background: var(--or); color: var(--bg);
+      text-align: center; padding: 0.6rem 1.5rem;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .annonce-barre strong { font-weight: 700; }
+
+    .urgence-compteur {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.68rem; color: var(--or);
+      letter-spacing: 0.08em; margin-bottom: 1rem;
+    }
+    .urgence-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--or); flex-shrink: 0;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .urgence-prix-note {
+      text-align: center; margin-top: -3.5rem; margin-bottom: 4rem;
+      font-size: 0.72rem; color: var(--text-2); letter-spacing: 0.06em;
+    }
+    .urgence-prix-note span { color: var(--or); font-weight: 500; }
+
+    .pak-timer {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 0.75rem;
+    }
+    .pak-timer-icon { font-size: 0.8rem; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--divide); padding: 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    footer p { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+      font-style: italic; color: var(--text-2); letter-spacing: 0.08em;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .produits-grid { grid-template-columns: 1fr; }
+      .avis-grid { grid-template-columns: 1fr 1fr; }
+      .pak { grid-template-columns: 1fr; gap: 2.5rem; }
+      .pak-right { align-items: flex-start; flex-direction: row; flex-wrap: wrap; gap: 2rem; }
+      .pak-prix { text-align: left; }
+      .topbar, footer { padding: 1.2rem 1.5rem; }
+      .section, .apropos, .faq-section { padding: 0 1.5rem 6rem; }
+      .section-narrow { padding: 0 1.5rem 6rem; }
+      .hero { padding: 5rem 1.5rem 0; }
+      .stats-bande { flex-wrap: wrap; }
+      .stat-item { min-width: 50%; border-bottom: 1px solid var(--divide); }
+    }
+    @media (max-width: 600px) {
+      .avis-grid { grid-template-columns: 1fr; }
+      .comm-item { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .tab-btn { padding: 0.8rem 1.1rem; letter-spacing: 0.08em; font-size: 0.65rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .pak { padding: 2.5rem 1.5rem; }
+      .pak-right { flex-direction: column; }
+      .stat-item { min-width: 100%; }
+      .hero-avis { flex-direction: column; text-align: center; gap: 0.4rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tab-panel.active { animation: none; }
+      .hero h1 .word { animation: none; opacity: 1; transform: none; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barre d'annonce urgence -->
+  <div class="annonce-barre">
+    🔥 <strong>Offre lancement</strong> — Pak Konplé à 4,99€ au lieu de 29,97€ · <strong>Aksé immédiat</strong>
+  </div>
+
+  <!-- Topbar -->
+  <nav class="topbar">
+    <a href="#" class="logo">R<span>N</span>Z</a>
+    <a href="https://rnz-diagnostic.netlify.app" class="back">Fer mon diagnostic</a>
+  </nav>
+
+  <!-- ══════════════════════════════
+       1. HERO — Accroche émotionnelle
+  ══════════════════════════════ -->
+  <header class="hero">
+    <div class="hero-mark">Boutique RNZ</div>
+    <h1 id="hero-title" aria-label="Rouve out zié, komans ton chimen"></h1>
+    <p class="hero-sub">Zoutis pou avans dann la vi — an kréol rényoné</p>
+
+    <!-- Un avis vedette — confiance immédiate -->
+    <div class="hero-avis">
+      <span class="hero-avis-stars">★ ★ ★ ★ ★</span>
+      <span class="hero-avis-texte">"Sa la rentré profon dann mwin."</span>
+      <span class="hero-avis-auteur">Roland · 45 ans</span>
+    </div>
+
+    <br />
+    <a href="#produits" class="hero-cta">Voir les produits</a>
+  </header>
+
+  <!-- ══════════════════════════════
+       2. STATS — Crédibilité (une seule fois)
+  ══════════════════════════════ -->
+  <div class="stats-bande">
+    <div class="stat-item">
+      <span class="stat-num">5 ans</span>
+      <span class="stat-label">D'existence</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">50 000+</span>
+      <span class="stat-label">Personnes qui nous suivent</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">80+</span>
+      <span class="stat-label">Clients nous ont fait confiance</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       3. CITATION — Goût / envie
+  ══════════════════════════════ -->
+  <div class="citation-section">
+    <span class="citation-eyebrow">✦ Fraz RNZ du jour</span>
+    <p class="citation-texte">Kan ou rouve out zié, la vi i koumans. Shak jou lé in nouvèl chans pou vir out chimen.</p>
+    <span class="citation-source">— RNZ · Rouv Nout Zyé</span>
+  </div>
+
+  <!-- ══════════════════════════════
+       4. TABS + PRODUITS — Action
+  ══════════════════════════════ -->
+  <div class="tabs-row">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" role="tab" onclick="showTab('boutique', this)">Boutique</button>
+      <button class="tab-btn" role="tab" onclick="showTab('communaute', this)">Communauté</button>
+      <button class="tab-btn" role="tab" onclick="showTab('avis', this)">Avis</button>
+    </div>
+  </div>
+
+  <!-- BOUTIQUE -->
+  <div id="tab-boutique" class="tab-panel active">
+    <div class="section" id="produits">
+
+      <p class="produits-promesse">Shak PDF la lé ékri pou ou — pou ki ou avans, ou grandi, ou tien debout.</p>
+
+      <div class="produits-grid">
+        <article class="carte">
+          <span class="carte-badge">Le + populaire</span>
+          <span class="carte-num">01</span>
+          <h2>7 Fraz pou<br />Gard la Foi</h2>
+          <p class="carte-desc">Sèt fraz fo pou tini la foi kan la vi la dir. À lir chak matin ou kan ou santi ou faibl.</p>
+          <div class="carte-footer">
+            <div class="prix-carte">9,99<sup>€</sup></div>
+            <a href="rnz-produit-fraz.html" class="btn-ghost">Voir le produit</a>
+          </div>
+        </article>
+        <article class="carte">
+          <span class="carte-num">02</span>
+          <h2>30 Gayar<br />Sitasion</h2>
+          <p class="carte-desc">Trante sitasion pou alim la flamm dann ou chak jou. An kréol, droit o kèr.</p>
+          <div class="carte-footer">
+            <div class="prix-carte">9,99<sup>€</sup></div>
+            <a href="rnz-produit-sitasion.html" class="btn-ghost">Voir le produit</a>
+          </div>
+        </article>
+        <article class="carte">
+          <span class="carte-num">03</span>
+          <h2>30 Fraz<br />RNZ</h2>
+          <p class="carte-desc">Trante fraz RNZ pou ou avans, ou grandi, ou tien debout. Un mois, un pas chak jou.</p>
+          <div class="carte-footer">
+            <div class="prix-carte">9,99<sup>€</sup></div>
+            <a href="rnz-produit-30fraz.html" class="btn-ghost">Voir le produit</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="urgence-prix-note">
+        ⏳ Prix lancement limité — <span>le tarif augmentera san préavi</span>
+      </p>
+
+      <!-- Pak Konplé -->
+      <div class="pak">
+        <div class="pak-left">
+          <span class="pak-eyebrow">✦ Pak Konplé — Meilleur choix</span>
+          <div class="pak-timer">
+            <span class="pak-timer-icon">⏳</span>
+            <span id="pak-countdown">Offre spéciale — expire dans 23:47:12</span>
+          </div>
+          <h2>Tout dann<br /><em>enn sel pak</em></h2>
+          <p class="pak-desc">Tout bann PDF RNZ ansanm — un pak konplé pou ou komans ou vréman, depi zordi.</p>
+          <ul class="pak-liste">
+            <li>7 Fraz pou Gard la Foi</li>
+            <li>30 Gayar Sitasion</li>
+            <li>30 Fraz RNZ</li>
+            <li>Aksé à tout bann prochains zoutis RNZ</li>
+          </ul>
+          <div class="pak-avis">
+            <div class="pak-avis-stars">★ ★ ★ ★ ★</div>
+            <p class="pak-avis-texte">"Le pak konplé in vali chak santim. Mwin lé surpris par la kalité."</p>
+            <span class="pak-avis-auteur">Nathalie · 39 ans</span>
+          </div>
+        </div>
+        <div class="pak-right">
+          <div class="pak-prix">
+            <span class="pak-prix-ancien">29,97€ séparéman</span>
+            <span class="pak-prix-num">4,99€</span>
+            <span class="pak-prix-label">En sel fwa · Aksé immédiat</span>
+            <span class="pak-economie">Tu économises 25€</span>
+          </div>
+          <div class="urgence-compteur">
+            <span class="urgence-dot"></span>
+            <span>Prix lancement — sé pa pou touzour</span>
+          </div>
+          <a href="https://buy.stripe.com/6oUbJ10I26FR3Gybci7Zu00" class="btn-stripe" target="_blank" rel="noopener">
+            Profiter de l'offre maintenant
+          </a>
+          <p class="pak-securite">
+            🔒 Paiement sécurisé Stripe
+            <span>Ou resevra ou PDF par email direkteman</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- À PROPOS -->
+      <div style="max-width:740px; margin:0 auto; padding:0 0 5rem;">
+        <div class="apropos-card">
+          <span class="apropos-eyebrow">✦ À propos de RNZ</span>
+          <h2>Né depi<br /><em>in ras-le-bol</em></h2>
+          <p>RNZ i né pa par azard. In jou, in moman — mi té fatigé. Fatigé d'rod bann konteni ki apporte ryin, ki tire dann baz, ki fé pèrd son tan. Mi té vwar partou bann moun ki té gaspiy zot énerji lor bann shose ki konstrui pa zot la vi.</p>
+          <p>Alor mi finn désidr d'partak. Partak mon konesans, mon valérs, bann leson ki mon parkou é mon léshèk m'inn apris. Paske aidé bann lot — sé dann mon natiur. É si mi kapab évit à in sel moun d'fé bann mèm ero ki mwin — alors RNZ in giny son sans.</p>
+          <p>RNZ sé pou tout Rényoné du monde entier — toi ki koné ou kapab fé pli, min ki bezwin parfwa in ti kout d'min, in mo ki rèl ou, in fraz ki rapèl ou ki ou lé. Pa dann fransé — an kréol, dann ou lang, droit dann ou kèr.</p>
+          <p>Depi 5 an, pli ki 50 000 moun i suiv RNZ. Pa pou éfèktif — pou paske bann mo i touche. É sa, sé la sèl shoz ki kont pou mwin.</p>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div style="max-width:740px; margin:0 auto; padding:0 0 8rem;">
+        <span class="faq-eyebrow">✦ Questions fréquentes</span>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Kouman mi resevra mon PDF apré le payeman ?<em class="faq-icon">+</em></button>
+            <div class="faq-reponse"><p>Apré ou payeman Stripe, ou va resevra in email avèk ton lien téléchargman direkteman dann ou boite. Sa prend moins ki 1 minit. Si ou trouv pa, vérifié out dossier "Spam" ou "Promotions".</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Bann PDF lé an kréol oubien an fransé ?<em class="faq-icon">+</em></button>
+            <div class="faq-reponse"><p>Tout bann PDF RNZ lé ékri an kréol rényoné. Sé sa ki fé la différans — zot parlé dirèkteman à ou, avèk bann mo ou konnèt depi zanfan, pa avèk in tradiksion.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Èske mi pé imprim mon PDF ?<em class="faq-icon">+</em></button>
+            <div class="faq-reponse"><p>Wi, tout bann PDF RNZ lé format pou étré lisib lor nport ki aparèy é imprimab. Ou pé gard lor ou téléfon, ou tablèt, ou ordinatèr, ou imprim pou kolé lor ou miray.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Èske i é in abonman ?<em class="faq-icon">+</em></button>
+            <div class="faq-reponse"><p>Non — ou payé en sel fwa, ou gard pou touzour. Aucun frais kaché, aucun abonman. Ou aksèd à ton PDF à vi, san limit.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Le Pak Konplé i inkli kwa exakteman ?<em class="faq-icon">+</em></button>
+            <div class="faq-reponse"><p>Le Pak Konplé i inkli les 3 PDFs RNZ : "7 Fraz pou Gard la Foi", "30 Gayar Sitasion", é "30 Fraz RNZ". Ou resevra tout bann 3 par email direkteman, plis aksé à tout bann prochains zoutis RNZ à tarif préféransiel.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMMUNAUTÉ -->
+  <div id="tab-communaute" class="tab-panel">
+    <div class="section-narrow">
+      <div class="comm-list">
+        <div class="comm-item">
+          <div class="comm-left">
+            <span class="comm-kicker">Gratuit · Telegram</span>
+            <h3>Rejoin la Komyoté RNZ</h3>
+            <p>Un group pou bann moun ki vé avans, grandi, é partaz zot chimen. An kréol, ansanm, chak jou.</p>
+          </div>
+          <a href="https://t.me/+SYBgiJbQZXBhMjM8" class="btn-tg" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+            Rejoindre
+          </a>
+        </div>
+        <div class="comm-item">
+          <div class="comm-left">
+            <span class="comm-kicker">Gratuit · Diagnostic</span>
+            <h3>Kot ou éti dann la vi ?</h3>
+            <p>Fer ton diagnostic gratuit pou konnèt ton profil émosionel é komenss to parkou pèrsonèl.</p>
+          </div>
+          <a href="https://rnz-diagnostic.netlify.app" class="btn-link" target="_blank" rel="noopener">Fer le diagnostic</a>
+        </div>
+        <div class="comm-item">
+          <div class="comm-left">
+            <span class="comm-kicker">Gratuit · Roue</span>
+            <h3>Roue des Cadeaux RNZ</h3>
+            <p>Tourne la rou é gagne bann PDF RNZ gratuitement. Enn sèl tiraz par moun.</p>
+          </div>
+          <a href="https://rnz-rou.vercel.app" class="btn-link" target="_blank" rel="noopener">Tourne la rou</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVIS -->
+  <div id="tab-avis" class="tab-panel">
+    <div class="section">
+      <div class="avis-grid">
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"Mwin lé pa abitié avèk sa kalité kréasion an kréol. RNZ i donn mwin la fors chak matin."</p>
+          <span class="avis-auteur">Marie-Jo · 34 ans</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"Les 30 sitasion ek mi tien debout. Mwin lé pli fokisé, pli positis dann mon la vi."</p>
+          <span class="avis-auteur">Kevin · 28 ans</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"Le diagnostic in trouv mon profil exakteman. Mi kwar pa in tromp mwin. Mersi RNZ !"</p>
+          <span class="avis-auteur">Sandra · 41 ans</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"An kréol sa touche pli difèraman. Zot lafé konpran la vi avèk bann mo nou konnèt depi lanfans."</p>
+          <span class="avis-auteur">Thierry · 52 ans</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"Le pak konplé in vali chak santim. Mwin lé surpris par la kalité. Mersi !"</p>
+          <span class="avis-auteur">Nathalie · 39 ans</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"Mi lir in fraz RNZ chak matin avan mi lev. Sa in shanié mon maniér pou komansé mon jou. Mwin lé pli kalm, pli positis."</p>
+          <span class="avis-auteur">Laure · 29 ans</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"Mi té kwar sa té zis bann fraz. Min non — sa la rentré profon dann mwin. Mon kèr in kompran sa mon lèspri té refiz pou lontan."</p>
+          <span class="avis-auteur">Roland · 45 ans</span>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+          <p class="avis-texte">"An kréol sa touche diferaman. RNZ i parlé à nou vréman — pa kopi kol dann fransé. Mersi pou sa travay."</p>
+          <span class="avis-auteur">Cindy · 33 ans</span>
+        </div>
+        <div class="avis-card avis-empty">
+          <div style="text-align:center;">
+            <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--text-2);margin-bottom:1.25rem;">Et toi ?</p>
+            <a href="rnz-avis.html" class="btn-ghost">Lès ton avis</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 RNZ — Rouv Nout Zyé</p>
+    <span class="footer-logo">Développement personnel en kréol rényoné</span>
+  </footer>
+
+  <script>
+    function showTab(name, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    const lines = [
+      { text: 'Rouve out zié,', italic: false },
+      { text: 'komans ton chimen', italic: true }
+    ];
+    const container = document.getElementById('hero-title');
+    let delay = 0;
+    lines.forEach((line, li) => {
+      const words = line.text.split(' ');
+      const wrapper = document.createElement('span');
+      wrapper.style.display = 'block';
+      words.forEach((word, wi) => {
+        const span = document.createElement(line.italic ? 'em' : 'span');
+        span.classList.add('word');
+        span.textContent = word + (wi < words.length - 1 ? '\u00a0' : '');
+        span.style.animationDelay = delay + 's';
+        wrapper.appendChild(span);
+        delay += 0.1;
+      });
+      container.appendChild(wrapper);
+      if (li < lines.length - 1) delay += 0.05;
+    });
+
+    // ── Urgence : countdown 24h (session) ──
+    (function() {
+      const totalSeconds = 23 * 3600 + 47 * 60 + 12;
+      let remaining = totalSeconds;
+      function update() {
+        if (remaining <= 0) remaining = totalSeconds;
+        const h = Math.floor(remaining / 3600).toString().padStart(2, '0');
+        const m = Math.floor((remaining % 3600) / 60).toString().padStart(2, '0');
+        const s = (remaining % 60).toString().padStart(2, '0');
+        const el = document.getElementById('pak-countdown');
+        if (el) el.textContent = 'Offre spéciale — expire dans ' + h + ':' + m + ':' + s;
+        remaining--;
+      }
+      update();
+      setInterval(update, 1000);
+    })();
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>
